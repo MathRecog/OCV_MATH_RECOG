@@ -21,7 +21,7 @@ ADDED from AndroidManifest.xml:7:5
 		ADDED from AndroidManifest.xml:9:9
 	android:theme
 		ADDED from AndroidManifest.xml:10:9
-activity#org.opencv.samples.tutorial3.Tutorial3Activity
+activity#org.opencv.samples.mathrecog.CameraActivity
 ADDED from AndroidManifest.xml:12:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:14:19
