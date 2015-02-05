@@ -17,15 +17,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: org.opencv.samples.tutorial3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0fa1272-5b5b-49d2-8bf9-6356c476effc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/openCVTutorial3CameraControl/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/openCVTutorial3CameraControl/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/openCVTutorial3CameraControl/openCVTutorial3CameraControl.iml" afterPath="$PROJECT_DIR$/openCVTutorial3CameraControl/openCVTutorial3CameraControl.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/openCVTutorial3CameraControl/src/main/res/layout/tutorial3_surface_view.xml" afterPath="$PROJECT_DIR$/openCVTutorial3CameraControl/src/main/res/layout/tutorial3_surface_view.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\github\OCV_MATH_RECOG\openCVTutorial3CameraControl\src\main\java\org\opencv\samples\tutorial3\Tutorial3Activity.java" afterPath="$PROJECT_DIR$/openCVTutorial3CameraControl/src/main/java/org/opencv/samples/mathrecog/CameraActivity.java" />
-      <change type="MOVED" beforePath="D:\github\OCV_MATH_RECOG\openCVTutorial3CameraControl\src\main\java\org\opencv\samples\tutorial3\Tutorial3View.java" afterPath="$PROJECT_DIR$/openCVTutorial3CameraControl/src/main/java/org/opencv/samples/mathrecog/CameraView.java" />
-    </list>
+    <list default="true" id="f0fa1272-5b5b-49d2-8bf9-6356c476effc" name="Default" comment="" />
     <ignored path="tutorial-3-cameracontrol.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
