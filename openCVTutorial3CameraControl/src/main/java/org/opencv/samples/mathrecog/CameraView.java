@@ -79,11 +79,8 @@ public class CameraView extends JavaCameraView implements PictureCallback {
             fos.write(data);
             fos.close();
             ImageProcessor imp = new ImageProcessor(mPictureFileName);
-            Mat gs = imp.toGrayscale();
-            String gscale = new String(mPictureFileName);
-            gscale.replace(".jpg", "_gs.jpg");
+            imp.Process();
 
-            imwrite(gscale, gs);
 
         } catch (java.io.IOException e) {
             Log.e("PictureDemo", "Exception in photoCallback", e);
