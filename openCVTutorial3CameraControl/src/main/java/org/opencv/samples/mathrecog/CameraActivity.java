@@ -22,6 +22,7 @@ import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
@@ -67,7 +68,6 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
         mOpenCvCameraView = (CameraView) findViewById(R.id.tutorial3_activity_java_surface_view);
 
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
-
         mOpenCvCameraView.setCvCameraViewListener(this);
         File f = new File(dataFolder);
         if(!f.exists() || !f.isDirectory()) {

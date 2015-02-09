@@ -140,7 +140,7 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
 
                 if (sizes != null) {
                     /* Select the size that fits surface considering maximum size allowed */
-                    Size frameSize = calculateCameraFrameSize(sizes, new JavaCameraSizeAccessor(), width, height);
+                    android.hardware.Camera.Size frameSize = sizes.get(0);//calculateCameraFrameSize(sizes, new JavaCameraSizeAccessor(), width, height);
 
                     params.setPreviewFormat(ImageFormat.NV21);
                     Log.d(TAG, "Set preview size to " + Integer.valueOf((int)frameSize.width) + "x" + Integer.valueOf((int)frameSize.height));
@@ -154,7 +154,7 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
                     {
                         params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
                     }
-
+                    params.setPictureSize(frameSize.width, frameSize.height);
                     mCamera.setParameters(params);
                     params = mCamera.getParameters();
 
@@ -168,6 +168,8 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
 
                     if (mFpsMeter != null) {
                         mFpsMeter.setResolution(mFrameWidth, mFrameHeight);
+                    } else {
+                        enableFpsMeter();
                     }
 
                     int size = mFrameWidth * mFrameHeight;
@@ -274,6 +276,7 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
 
     public void onPreviewFrame(byte[] frame, Camera arg1) {
         Log.d(TAG, "Preview Frame received. Frame size: " + frame.length);
+        Log.d(TAG, "Picture size: " + mCamera.getParameters().getPictureSize().width + "x" + mCamera.getParameters().getPictureSize().height);
         synchronized (this) {
             mFrameChain[1 - mChainIdx].put(0, 0, frame);
             this.notify();
