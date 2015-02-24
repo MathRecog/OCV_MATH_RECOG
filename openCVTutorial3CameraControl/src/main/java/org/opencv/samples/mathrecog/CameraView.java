@@ -24,7 +24,7 @@ public class CameraView extends JavaCameraView implements PictureCallback {
     }
 
     public List<Size> getResolutionList() {
-        if(mCamera == null) {
+        if (mCamera == null) {
             initializeCamera(1920, 1024);
         }
         return mCamera.getParameters().getSupportedPreviewSizes();

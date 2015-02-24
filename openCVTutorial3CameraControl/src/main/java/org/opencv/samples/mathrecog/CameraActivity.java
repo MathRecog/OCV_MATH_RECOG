@@ -16,6 +16,7 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import static org.opencv.highgui.Highgui.imread;
 import static org.opencv.highgui.Highgui.imwrite;
 import static org.opencv.imgproc.Imgproc.*;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.hardware.Camera.Size;
@@ -40,15 +41,15 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
         @Override
         public void onManagerConnected(int status) {
             switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-                {
+                case LoaderCallbackInterface.SUCCESS: {
                     mOpenCvCameraView.enableView();
                     mOpenCvCameraView.setOnTouchListener(CameraActivity.this);
-                } break;
-                default:
-                {
+                }
+                break;
+                default: {
                     super.onManagerConnected(status);
-                } break;
+                }
+                break;
             }
         }
     };
@@ -57,7 +58,9 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
 
     }
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,22 +73,20 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, O
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
         File f = new File(dataFolder);
-        if(!f.exists() || !f.isDirectory()) {
+        if (!f.exists() || !f.isDirectory()) {
             f.mkdirs();
         }
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback);
     }

@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="D:\github\OCV_MATH_RECOG\openCVTutorial3CameraControl\fannj-0.6.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="94efb0d7eb0c29c665eca0e971c71ee621763052">
+        <dex dex="D:\github\OCV_MATH_RECOG\openCVTutorial3CameraControl\build\intermediates\pre-dexed\debug\fannj-0.6-ff834e4e3a61274e028cf9874f1089707c4692dd.jar" />
+    </item>
+    <item
         jar="D:\github\OCV_MATH_RECOG\openCVTutorial3CameraControl\build\intermediates\exploded-aar\OCV_MATH_RECOG\openCVLibrary2410\unspecified\classes.jar"
         jumboMode="false"
         revision="21.1.2"
