@@ -37,47 +37,52 @@ public class ImageProcessor {
     }
 
     public void Process() {
-        Mat patient = photo;
-        // 1st PART: image processing, finding symbols on the image and cut them
+        Mat patient = new Mat(photo.rows(), photo.cols(), photo.type());
+        photo.copyTo(patient);
+        // 1st PART: image processing, finding symbols on the image and crop them
 
         // convert to grayscale, make it contrast
         cvtColor(patient, patient, COLOR_BGR2GRAY, 0);
-        patient.convertTo(patient, -1, 1.95, -0.2);
-        imwrite("/sdcard/MathRecogData/__ct__" + debug, patient);
+        patient.convertTo(patient, -1, 2.05, -0.5);
+
+        Mat symbolsCont = new Mat(photo.rows(), photo.cols(), photo.type());
+        patient.copyTo(symbolsCont); // we are going to extract symbols from this matrix
 
         // thersh hold (make the image binary)
-        adaptiveThreshold(patient, patient, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, 9, 15);
+        adaptiveThreshold(patient, patient, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, 35, 35);
         erode(patient, patient, getStructuringElement(MORPH_RECT, new Size(2, 4)));
         imwrite("/sdcard/MathRecogData/__ats__" + debug, patient);
 
+        // find lines
+        Mat zeros = new Mat(patient.rows(), patient.cols(), patient.type(), new Scalar(255, 255, 255));
+        subtract(zeros, patient, patient);
+        for(int t = 0; t < 2; t++) {
+            Mat lines = new Mat();
+            HoughLinesP(patient, lines, 1, Math.PI / 180, 50, patient.height() / 2, 7);
+            Log.i("Lines count:", String.valueOf(lines.cols()));
+            if (lines.cols() > 10) {
+                for (int i = 0; i < lines.cols(); i++) {
+                    double[] val = lines.get(0, i);
+                    line(patient, new Point(val[0], val[1]), new Point(val[2], val[3]), new Scalar(0, 0, 0), 3);
+                    Log.i("New Line:", "("+val[0]+","+val[1]+") - ("+val[2]+","+val[3]+")");
+                }
+            }
+        }
         // connect closest black points
         int w = patient.cols();
         int h = patient.rows();
-        for (int j = 0; j < h - 5; ) {
-            for (int k = 0; k < w - 5; ) {
-                double sum = 0.0;
-                for (int t = k; t < k + 5; t++) {
-                    for (int i = j; i < j + 5; i++) {
-                        double[] data = patient.get(i, t);
-                        sum += data[0];
-                    }
+        for (int j = 0; j < h - (h % 9); j += 9 ) {
+            for (int k = 0; k < w - (w % 9); k+=9 ) {
+                Mat tmp = patient.submat(j, j+9, k, k+9);
+                double[] sum = getSum(tmp);
+                if (sum > 255 * 6) {
+                    rectangle(patient, new Point(k, j), new Point(k + 8, j + 8), new Scalar(255, 255, 255), -1);
                 }
-                if (sum < 255 * 19) {
-                    rectangle(patient, new Point(k, j), new Point(k + 4, j + 4), new Scalar(0, 0, 0), -1);
-                }
-                k = k + 5;
             }
-            j = j + 5;
         }
 
         imwrite("/sdcard/MathRecogData/__algo__" + debug, patient);
-        Mat symbolsCont = patient; // we are going to extract symbols from this matrix
-        // smooth the image
-        GaussianBlur(patient, patient, new Size(5, 5), 0);
-        imwrite("/sdcard/MathRecogData/__gb__" + debug, patient);
 
-        // find borders
-        Canny(patient, patient, 200.0, 295.0, 3, true);
 
         // find contours
         Mat hierarchy = new Mat();
@@ -111,7 +116,7 @@ public class ImageProcessor {
         Size s2 = new Size();
         Point p20 = new Point();
         separatedConts.get(21).locateROI(s2, p20);
- //       Mat test = symbolsCont.submat();
+        //       Mat test = symbolsCont.submat();
         // 2nd PART: try to recognize symbols
 
         List<String> chars = new ArrayList<String>();
@@ -130,5 +135,21 @@ public class ImageProcessor {
 
         // 3rd PART: generate a FORMULA
 
+    }
+
+    private double[] getSum(Mat m) {
+        double[] out = new double[10]; // 1 - 1,1, 2 - 1,2, 3 - 1,3, 4 - 2,1.....
+        double sum = 0;
+        for(int i = 0; i < m.cols(); i++){
+            for(int t = 0; t < m.rows(); t++){
+                double[] data = m.get(t, i);
+                sum += data[0]; //for an image in grayscale
+            }
+        }
+        return sum;
+    }
+
+    private int getMaxSum(Mat m){
+        return m.cols()*m.rows()*255; //grayscale
     }
 }
